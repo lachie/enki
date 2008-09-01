@@ -5,6 +5,8 @@ class PostsController < ApplicationController
 
     raise(ActiveRecord::RecordNotFound) if @tag && @posts.empty?
 
+    @latest_post = @posts.shift
+
     respond_to do |format|
       format.html
       format.atom { render :layout => false }

@@ -1,5 +1,5 @@
 !!! XML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">
 
 
 %html{:xmlns=>"http://www.w3.org/1999/xhtml"}
@@ -36,16 +36,30 @@
           -category_links_for_navigation.each do |link|
             %li= link_to(link.name, link.url)
             
-        =render :partial => 'layouts/flickr'
-        =render :partial => 'layouts/lastfm'
+        = yield(:sidebar)
+        
+        %ul
+          %a{:href=>"http://feeds.feedburner.com/Smartbomb"}
+            %img{:src=>"http://feeds.feedburner.com/~fc/Smartbomb?bg=99CCFF&amp;fg=444444&amp;anim=0", :height=>"26", :width=>"88", :style=>"border:0", :alt=>""}
+            
+        -#=render :partial => 'layouts/flickr'
+        -#=render :partial => 'layouts/lastfm'
 
     #footer
       = config[:title]
       &#169;
       = config[:author, :name]
+      &middot;
       Valid
       %a{:href=>"http://validator.w3.org/check?uri=referer"} XHTML
       and
       =link_to "ATOM", "http://feedvalidator.org/check.cgi?url=#{config[:url]}/posts.atom"
+      &middot;
       Powered by 
       %a{:href=>"http://www.enkiblog.com", :title=>"A ruby on rails blogging app for the fashionable developer"} Enki
+      
+      
+  %script{:src=>"http://www.google-analytics.com/urchin.js", :type=>"text/javascript"}
+  %script{:type=>"text/javascript"}
+    _uacct = "UA-1843540-3";
+    urchinTracker();

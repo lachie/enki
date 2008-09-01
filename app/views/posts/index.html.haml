@@ -1,0 +1,20 @@
+- content_for(:page_title) do
+  = posts_title(@tag)
+- content_for(:head) do
+  = auto_discovery_link_tag(:atom, 'http://feeds.feedburner.com/Smartbomb')
+- content_for(:sidebar) do
+  %h2 Recent
+  %ul
+    -@posts.each do |post|
+      %li
+        %small
+          =post.published_at.strftime('%d %b %y')
+        =link_to post.title, post_path(post)
+    %li=link_to("more...", archives_path)
+        
+
+-unless @latest_post
+  %p There are no posts yet.
+-else
+  .post.entry{:class => "post-#{@latest_post.id}"}
+    = render :partial => 'post', :locals => {:post => @latest_post}

@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 require File.dirname(__FILE__) + '/../config/environment'
 require 'pp'
 
@@ -11,20 +11,21 @@ end
 
 begin
   # tags
-  Tag.delete_all
-  seen_tag = {}
-  Mephisto.connection.select_all(%{SELECT name, 0 as tag_id, id as section_id FROM sections
-  UNION
-  SELECT name, id as tag_id, 0 as section_id FROM tags}).each do |tag|
-    unless seen_tag[tag['name']]
-      seen_tag[tag['name']] = true
-      Tag.create! tag.slice('id','name')
-    end
-  end
+  # Tag.delete_all
+  #   seen_tag = {}
+  #   Mephisto.connection.select_all(%{SELECT name, 0 as tag_id, id as section_id FROM sections
+  #   UNION
+  #   SELECT name, id as tag_id, 0 as section_id FROM tags}).each do |tag|
+  #     unless seen_tag[tag['name']]
+  #       seen_tag[tag['name']] = true
+  #       Tag.create! tag.slice('id','name')
+  #     end
+  #   end
 
 
 
   # posts
+  puts "posts"
   Post.delete_all
   posts = {}
 
@@ -33,23 +34,28 @@ begin
                                       inner join assigned_sections ON assigned_sections.article_id = contents.id
                                       where type = 'Article' and section_id = 1 and published_at is not null").each do |post|
 
-    new_post = Post.create! post.slice(*%w/title slug body body_html published_at created_at updated_at approved_comments_count/)
+
     
-    pp post['id']
+    post['body'] = post['body'].gsub(/<filter:jscode lang="(\w+)">/) {|u| $1 ? "--- #{$1.downcase}" : "---"}.gsub('</filter:jscode>','---').gsub('<filter:jscode>','---')
+    new_post = Post.create! post.slice(*%w/title slug body published_at created_at updated_at approved_comments_count/)
+    
     posts[post['id']] = new_post
   end
 
 
   # comment
+  puts "comments"
   Comment.delete_all
 
-  Mephisto.connection.select_all("select contents.*, article_id as post_id from contents where type='Comment'").each do |comment|
-    puts 
+  Mephisto.connection.select_all("select contents.*, article_id as post_id from contents where type='Comment' and approved=1").each do |comment|
     next if comment['body'][/cialis/i]
     
     if comment['author_url'].blank?
       comment['author_url'] = ''
     end
+    
+    comment['body'] = CGI::escapeHTML(comment['body'])
+    comment['body_html'] = ''
     
     new_comment = Comment.new comment.slice(*%w/author author_url author_email author_openid_authority body body_html created_at updated_at/)
     new_comment.post = posts[comment['post_id']]

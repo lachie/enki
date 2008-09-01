@@ -56,6 +56,8 @@ class Albino
   end
 
   def initialize(target, lexer = :text, format = :html)
+    lexer = lexer.blank? ? 'text' : lexer
+    
     @target  = File.exists?(target) ? File.read(target) : target rescue target
     @options = { :l => lexer, :f => format }
   end
@@ -65,9 +67,16 @@ class Albino
     stdin.puts @target
     stdin.close
     
-    puts stderr.read
     
-    stdout.read.strip
+    err = stderr.read
+    
+    if !err.blank?
+      puts "failed to convert using command #{command}"
+      puts err
+      "failed to convert: (#{command})"
+    else
+      stdout.read.strip
+    end
   end
 
   def colorize(options = {})
