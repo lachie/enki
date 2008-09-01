@@ -1,0 +1,1 @@
+ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:for_box] = '<em>%d</em><br/>%b'

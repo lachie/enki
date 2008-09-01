@@ -1,0 +1,18 @@
+.entrytitle
+  %h2=link_to(post.title, post_path(post))
+  %p.postdate=post.published_at.strftime('<em>%d</em><br/>%b')
+
+.entrybody
+  :plain
+    #{post.body_html}
+
+.entrymeta
+  posted by
+  %strong Lachie
+  -unless post.tags.blank?
+    |
+    %strong tags
+    \::
+    =linked_tag_list(post.tags)
+
+  = link_to(pluralize(post.approved_comments.size, "comment")+" &#187;", post_path(post, :anchor => 'comments'))
