@@ -28,7 +28,7 @@ body {
 }
 
 #content {
-	font-size: 1.2em;
+	font-size: 1.0em;
 	float: left;
 	padding: 3em 1em 1em 0;
 	width: 40em;	
@@ -83,6 +83,18 @@ h1, h2, h3{
 	letter-spacing: -1px;
 	margin:0;
 }
+
+#content h1 {
+  font-size: 1.6em;
+}
+#content h2 {
+  font-size: 1.4em;  
+}
+#content h3 {
+  font-size: 1.2em;
+}
+
+
 #header h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 3em;
@@ -103,14 +115,14 @@ h1, h2, h3{
 }
 
 .entrytitle h2 {
-	font-size: 1.5em;
+	font-size: 1.8em;
 	line-height: 1em;
 	margin-bottom: 0 0 1em 0;
 }
 
-.entrytitle h2 a
-{
+.entrytitle h2 a {
 	color: #aa5555;
+	font-size: 1.4em;
 }
 .entrytitle h2 a:hover{
 	color:#58BBEB;
@@ -126,9 +138,10 @@ h1, h2, h3{
   padding: 0.2em 0.45em;
   height: 56px;
   color: #fff;
+  font-size: 1.2em;
 }
 .entrytitle .postdate em {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-style: normal;
 }
 #sidebar h2 {
