@@ -4,8 +4,8 @@ class EnkiFormatter
       Lesstile.format_as_xhtml(
         text,
         :text_formatter => lambda {|text| RedCloth.new(CGI::unescapeHTML(text)).to_html},
-        :code_formatter => Lesstile::CodeRayFormatter
-      )  
+        :code_formatter => lambda {|code, lang| Albino.colorize(code,lang,:O => 'linenos=table')}
+      )
     end
   end
 end

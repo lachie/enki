@@ -15,7 +15,7 @@ class Lesstile
 
       text += "\n" unless ends_with?(text, "\n")
       text.gsub!(/\r\n/, "\n")
-      text = CGI::escapeHTML(text)
+
 
       code_regex = /---\s*?(\w*?)\s*?\n(.*?)---\n/m
       output = ""
@@ -25,6 +25,7 @@ class Lesstile
         code = captures[1]
         lang = blank?(captures[0]) ? nil : captures[0].downcase.intern
 
+        # CGI::escapeHTML()
         output += options[:text_formatter][match.pre_match] + options[:code_formatter][code, lang]
         text = match.post_match
       end
