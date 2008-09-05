@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def set_content_type
-    headers['Content-Type'] ||= 'application/xhtml+xml; charset=utf-8'
+    # headers['Content-Type'] ||= 'application/xhtml+xml; charset=utf-8'
   end
 
   def config
