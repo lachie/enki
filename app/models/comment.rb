@@ -96,4 +96,21 @@ class Comment < ActiveRecord::Base
       find(:all, options)
     end
   end
+  
+  # spam
+  def self.akismet_attributes
+      unless @akismet_attributes
+        c = Enki::Config.new("config/enki.yml")
+        @akismet_attributes = {
+          :key                  => c[:akismet][:key],
+          :blog                 => c[:url],
+          :user_ip              => user_ip,
+          :user_agent           => user_agent,
+          :comment_author       => name,
+          :comment_author_email => email,
+          :comment_author_url   => url,
+          :comment_content      => body
+        }
+      end
+    end
 end
