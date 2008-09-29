@@ -23,7 +23,7 @@ class CommentActivity
       ).collect {|post|
         CommentActivity.new(post)
       }.sort_by {|activity|
-        activity && activity.most_recent_comment && activity.most_recent_comment.created_at
+        (activity && activity.most_recent_comment && activity.most_recent_comment.created_at) || 0
       }.reverse
     end
   end
