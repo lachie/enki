@@ -1,8 +1,5 @@
 enki_config = Enki::Config.default
 
-require 'pp'
-pp enki_config
-
 Viking.logger = Rails.logger
 Viking.default_engine = enki_config[:viking][:engine]
 Viking.connect_options = {

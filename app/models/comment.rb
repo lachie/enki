@@ -44,10 +44,7 @@ class Comment < ActiveRecord::Base
   require 'pp'
   
   def check_spamminess
-    pp viking_attributes
     viking_says = Viking.check_comment(viking_attributes)
-    puts "viking_says:"
-    pp viking_says
     self.approved = !viking_says[:spam]
   end
   
