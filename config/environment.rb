@@ -57,6 +57,8 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
+  
+  config.gem 'vikinggem', :lib => 'viking', :version => '>=0.0.3'
 
   Dir.glob(File.join(RAILS_ROOT,'vendor','*','lib')).each do |dir|
     config.load_paths += [dir]

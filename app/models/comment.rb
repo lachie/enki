@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :post
 
-  before_save   :apply_filter
+  before_save   :check_spamminess, :apply_filter
 
   after_save    :denormalize
   after_destroy :denormalize
@@ -27,7 +27,29 @@ class Comment < ActiveRecord::Base
     super 
     errors.add(:base, openid_error) unless openid_error.blank?
   end
+  
+  def viking_attributes
+    {
+      :article_date         => post.created_at,
+      :permalink            => post.slug,
+      
+      :user_ip              => author_ip,
+      :comment_author       => author,
+      :comment_type         => 'comment',
+      :comment_content      => body,
+      :comment_author_email => author_email
+    }
+  end
 
+  require 'pp'
+  
+  def check_spamminess
+    viking_says = Viking.check_comment(viking_attributes)
+    puts "viking_says:"
+    pp viking_says
+    self.approved = !viking_says[:spam]
+  end
+  
   def apply_filter
     self.body_html = Lesstile.format_as_xhtml(
       self.body,
@@ -53,10 +75,6 @@ class Comment < ActiveRecord::Base
     false
   end
 
-  def approved?
-    true
-  end
- 
   def denormalize
     self.post.denormalize_comments_count!
   end

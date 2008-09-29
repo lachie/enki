@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render :partial => 'comment.html.erb'
+        render :partial => 'comment.html.haml'
       end
     end
   end
@@ -29,6 +29,8 @@ class CommentsController < ApplicationController
     @comment.post = @post
 
     session[:pending_comment] = nil
+    
+    @comment.author_ip = request.remote_ip
 
     if @comment.requires_openid_authentication?
       session[:pending_comment] = params[:comment]

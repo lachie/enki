@@ -5,6 +5,7 @@ tmp
 config/enki.yml
 config/deploy.rb
 config/secure_cap.rb
+config/initializers/viking.rb
 Capfile
 *.sql
 *.bz2

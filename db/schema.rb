@@ -12,13 +12,13 @@
 ActiveRecord::Schema.define(:version => 9) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "post_id",                 :null => false
-    t.string   "author",                  :null => false
-    t.string   "author_url",              :null => false
-    t.string   "author_email",            :null => false
-    t.string   "author_openid_authority", :null => false
-    t.text     "body",                    :null => false
-    t.text     "body_html",               :null => false
+    t.integer  "post_id",                 :limit => 11, :null => false
+    t.string   "author",                                :null => false
+    t.string   "author_url",                            :null => false
+    t.string   "author_email",                          :null => false
+    t.string   "author_openid_authority",               :null => false
+    t.text     "body",                                  :null => false
+    t.text     "body_html",                             :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 9) do
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
 
   create_table "open_id_authentication_associations", :force => true do |t|
-    t.integer "issued"
-    t.integer "lifetime"
+    t.integer "issued",     :limit => 11
+    t.integer "lifetime",   :limit => 11
     t.string  "handle"
     t.string  "assoc_type"
     t.binary  "server_url"
@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(:version => 9) do
   end
 
   create_table "open_id_authentication_nonces", :force => true do |t|
-    t.integer "timestamp",  :null => false
+    t.integer "timestamp",  :limit => 11, :null => false
     t.string  "server_url"
-    t.string  "salt",       :null => false
+    t.string  "salt",                     :null => false
   end
 
   create_table "pages", :force => true do |t|
@@ -54,17 +54,17 @@ ActiveRecord::Schema.define(:version => 9) do
   add_index "pages", ["title"], :name => "index_pages_on_title"
 
   create_table "posts", :force => true do |t|
-    t.string   "title",                                     :null => false
-    t.string   "slug",                                      :null => false
-    t.text     "body",                                      :null => false
-    t.text     "body_html",                                 :null => false
-    t.boolean  "active",                  :default => true, :null => false
-    t.integer  "approved_comments_count", :default => 0,    :null => false
+    t.string   "title",                                                   :null => false
+    t.string   "slug",                                                    :null => false
+    t.text     "body",                                                    :null => false
+    t.text     "body_html",                                               :null => false
+    t.boolean  "active",                                :default => true, :null => false
+    t.integer  "approved_comments_count", :limit => 11, :default => 0,    :null => false
     t.string   "cached_tag_list"
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "edited_at",                                 :null => false
+    t.datetime "edited_at",                                               :null => false
   end
 
   add_index "posts", ["published_at"], :name => "index_posts_on_published_at"
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(:version => 9) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
+    t.integer  "tag_id",      :limit => 11
+    t.integer  "taggable_id", :limit => 11
     t.datetime "created_at"
   end
 
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 9) do
 
   create_table "tags", :force => true do |t|
     t.string  "name"
-    t.integer "taggings_count", :default => 0, :null => false
+    t.integer "taggings_count", :limit => 11, :default => 0, :null => false
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name"
