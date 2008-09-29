@@ -3,6 +3,8 @@ $(function() { // onload
   var input_elements = comment_form.find(':text, textarea')
   var fetch_comment_preview = function() {
     var dest = window.location.href
+    
+    dest = dest.replace(/#.*$/,'');
 
     if (!dest.endsWith('comments'))
       dest += '/comments';
@@ -28,4 +30,4 @@ $(function() { // onload
   })
   if (input_elements.any(function() { return $(this).val().length > 0 }))
     fetch_comment_preview();
-})  
+})

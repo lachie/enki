@@ -9,18 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 9) do
+ActiveRecord::Schema.define(:version => 20080929002345) do
 
   create_table "comments", :force => true do |t|
-    t.integer  "post_id",                 :limit => 11, :null => false
-    t.string   "author",                                :null => false
-    t.string   "author_url",                            :null => false
-    t.string   "author_email",                          :null => false
-    t.string   "author_openid_authority",               :null => false
-    t.text     "body",                                  :null => false
-    t.text     "body_html",                             :null => false
+    t.integer  "post_id",                 :limit => 11,                    :null => false
+    t.string   "author",                                                   :null => false
+    t.string   "author_url",                                               :null => false
+    t.string   "author_email",                                             :null => false
+    t.string   "author_openid_authority",                                  :null => false
+    t.text     "body",                                                     :null => false
+    t.text     "body_html",                                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "author_ip",                                                :null => false
+    t.boolean  "approved",                              :default => false
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"

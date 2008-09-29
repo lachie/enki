@@ -44,6 +44,7 @@ class Comment < ActiveRecord::Base
   require 'pp'
   
   def check_spamminess
+    pp viking_attributes
     viking_says = Viking.check_comment(viking_attributes)
     puts "viking_says:"
     pp viking_says
@@ -92,6 +93,16 @@ class Comment < ActiveRecord::Base
   def post_title
     post.title
   end
+  
+  DEFAULT_FIND_RECENT = { 
+    :limit => DEFAULT_LIMIT,
+    :order => 'created_at DESC'
+  }
+  
+  named_scope :find_recent do |*args|
+    args = args.empty? ? {} : args.shift
+    DEFAULT_FIND_RECENT.merge(args)
+  end
 
   class << self
     def build_for_preview(params)
@@ -105,30 +116,6 @@ class Comment < ActiveRecord::Base
       end
       comment
     end
-
-    def find_recent(args = {})
-      options = { 
-        :limit => DEFAULT_LIMIT,
-        :order => 'created_at DESC'
-      }.merge(args)
-      find(:all, options)
-    end
   end
   
-  # spam
-  def self.akismet_attributes
-      unless @akismet_attributes
-        c = Enki::Config.new("config/enki.yml")
-        @akismet_attributes = {
-          :key                  => c[:akismet][:key],
-          :blog                 => c[:url],
-          :user_ip              => user_ip,
-          :user_agent           => user_agent,
-          :comment_author       => name,
-          :comment_author_email => email,
-          :comment_author_url   => url,
-          :comment_content      => body
-        }
-      end
-    end
 end

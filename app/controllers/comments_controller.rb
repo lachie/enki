@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.js do
-        render :partial => 'comment.html.haml'
+        render :partial => 'comment.html.erb', :layout => false
       end
     end
   end
