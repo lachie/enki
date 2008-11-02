@@ -48,6 +48,8 @@ class Comment < ActiveRecord::Base
     logger.info "viking response: #{viking_says.inspect}"
     
     self.approved = !viking_says[:spam]
+    
+    logger.info "approved: #{self.approved}"
   end
   
   def apply_filter
