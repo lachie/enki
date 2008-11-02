@@ -45,6 +45,8 @@ class Comment < ActiveRecord::Base
   
   def check_spamminess
     viking_says = Viking.check_comment(viking_attributes)
+    logger.info "viking response: #{viking_says.inspect}"
+    
     self.approved = !viking_says[:spam]
   end
   
