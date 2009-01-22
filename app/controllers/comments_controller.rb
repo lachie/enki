@@ -25,6 +25,11 @@ class CommentsController < ApplicationController
   end
 
   def create
+    unless params[:email].blank?
+      logger.error "They filled in the honeypot box"
+      return redirect_to(post_path(@post))
+    end
+    
     @comment = Comment.new((session[:pending_comment] || params[:comment] || {}).reject {|key, value| !Comment.protected_attribute?(key) })
     @comment.post = @post
 

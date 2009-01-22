@@ -23,6 +23,7 @@
           %li= format_comment_error(error)
 
   -form_for([@post, @comment]) do |form|
+    %input{:style=>'display:none', :name => 'email'}
     %div
       %p
         =form.text_field 'author'
