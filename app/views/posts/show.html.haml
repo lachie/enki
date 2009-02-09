@@ -14,29 +14,11 @@
       %li{:class => cycle('alt',''), :id=> "comment-#{comment.id}"}
         = render :partial => 'comments/comment', :locals => {:comment => comment}
 
-  %h2 Post a comment
-  -unless @comment.errors.empty?
-    #errors
-      %h3 Comment not added!
-      %ul
-        -@comment.errors.sort_by(&:first).each do |error|
-          %li= format_comment_error(error)
 
-  -form_for([@post, @comment]) do |form|
-    %input{:style=>'display:none', :name => 'email'}
-    %div
-      %p
-        =form.text_field 'author'
-        %label{:for=>"comment_author"}
-          %small
-            Name or 
-            %a{:href=>"http://openid.net/"} OpenID
-          (required)
-      %p
-        = form.text_area 'body'
-        %br/
-        %small
-          (
-          %a{:href=>"http://lesstile.rubyforge.org"} lesstile enabled
-          \- surround code blocks with ---)
-      %p=submit_tag "Add Comment"
+  
+  :javascript
+    var idcomments_acct = '7afed296a639a451a3f22b9175139517';
+    var idcomments_post_id;
+    var idcomments_post_url;
+  %span#IDCommentsPostTitle{:style=>"display:none"}
+  %script{:type=>'text/javascript', :src=>'http://www.intensedebate.com/js/genericCommentWrapperV2.js'}
